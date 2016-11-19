@@ -16,8 +16,7 @@ class Guardian:
     Get the lead paragraph from the Guardian articles matching this 
     search term. 
     """
-    payload = {'q' : search_term, 'format' : 'json', 
-        'api_key' : self.api_key}
+    payload = {'q' : search_term, 'format' : 'json', 'show-fields' : 'headline', 'api_key' : self.api_key}
     r = requests.get(self.url, payload)
 
     if (r.status_code != requests.codes.ok):
