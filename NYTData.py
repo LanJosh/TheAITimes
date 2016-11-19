@@ -15,15 +15,22 @@ class NewYorkTimes:
     """ Get the lead paragraph from the NYT articles matching this 
     search term. 
     """
-    payload = {'q' : search_term, 'fl' : 'lead_paragraph', 
-        'api_key' : self.api_key}
-    r = requests.get(self.url, payload)
-    if (r.status_code != requests.codes.ok):
-      r.raise_for_status()
-    data = r.json()
-    docs = data['response']['docs']
+    i = 0
     text = []
-    for x in docs:
-      text.extend(list(x.values())) 
+    payload = {'q' : search_term, 'fl' : 'headline', 
+      'api_key' : self.api_key, 'page' : str(i)} 
+    r = requests.get(self.url, payload)
+    while (i < 2):
+      if r.status_code != requests.codes.ok:
+        r.raise_for_status()
+      data = r.json()
+      docs = data['response']['docs']
+      for x in docs:
+        for y in x.values():
+          text.append(y['main'])
+      i = i + 1
+      payload = {'q' : search_term, 'fl' : 'headline', 
+        'api_key' : self.api_key, 'page' : str(i)} 
+      r = requests.get(self.url, payload)
     return text
 
