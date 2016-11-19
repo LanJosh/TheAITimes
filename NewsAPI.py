@@ -5,6 +5,7 @@ Module to get news feeds from NewsAPI.com
 
 import requests
 import json
+import time
 
 class NewsAPI :
     def __init__(self, api_key):
