@@ -5,6 +5,7 @@ Module to scrape news articles from the NYT article search api.
 
 import requests
 import json
+import time
 
 class NewYorkTimes:
   def __init__(self, api_key):
@@ -20,7 +21,8 @@ class NewYorkTimes:
     payload = {'q' : search_term, 'fl' : 'headline', 
       'api_key' : self.api_key, 'page' : str(i)} 
     r = requests.get(self.url, payload)
-    while (i < 2):
+    while (i < 99):
+      time.sleep(2)
       if r.status_code != requests.codes.ok:
         r.raise_for_status()
       data = r.json()
@@ -28,6 +30,7 @@ class NewYorkTimes:
       for x in docs:
         for y in x.values():
           text.append(y['main'])
+          print(y['main'])
       i = i + 1
       payload = {'q' : search_term, 'fl' : 'headline', 
         'api_key' : self.api_key, 'page' : str(i)} 

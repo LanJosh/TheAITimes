@@ -1,2 +1,1 @@
-An implementation of a character level RNN using Tensorflow to generate 
-news articles. 
+Using Markov chains to generate headlines for topics.
