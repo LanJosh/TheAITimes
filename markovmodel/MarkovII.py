@@ -17,7 +17,7 @@ class Markov:
     ```size``` is the number of words to look back at
     """
     for headline in data:
-      vocab = headline.split()
+      vocab = headline.split('\n')
       if (self.size > len(vocab)):
         print("State size is too large for corpus") 
       for i in range(len(vocab) - self.size):
@@ -35,26 +35,29 @@ class Markov:
     else:
       return "ERROR"
 
-  def generate_text(self, count):
+  def generate_text(self, count, end, seed=None):
     """
     Uses the Markov model to generate text
     ```count``` is the number of words to generate
     """
-    key = random.choice(self.model.keys())
+    if seed is not None:
+      key = tuple([seed]) 
+    else:
+      key = random.choice(self.model.keys())
     print("Run started at: {}".format(key))
     i = 0
     text = ""
     for word in list(key):
       text += " " + word
-    while (i < count - self.size):
+    while (True):
       word = self.generate_word(key)
-      if word == "ERROR":
-        return text
+      if word == "ERROR" or word == end:
+        return text + " " + word
       text += " " + word
       key = ((list(key))[1:]) 
       key.append(word)
       key = tuple(key)
       print("Run is at {}".format(key))
       i += 1 
-    return text.strip('*')
+    return text.strip('*') 
 

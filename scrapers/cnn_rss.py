@@ -22,7 +22,7 @@ class CNNRSS :
                              'http://rss.cnn.com/rss/cnn_freevideo.rss', \
                              'http://rss.cnn.com/rss/cnn_latest.rss']
 
-        def get_titles(self) :
+         def get_titles(self) :
             """
             Get the title of the news articles in the RSS feed
             """
